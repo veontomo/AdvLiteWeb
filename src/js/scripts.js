@@ -9,13 +9,15 @@
         var data = {"name": name, "password": password};
         jQuery.post(commitUrl, data, function (data, status, jqXHR) {
             console.log(data, status, jqXHR);
-        }).done(onResponceReceived).fail(function (msg) {
-            console.log("error: ", msg);
-        }).always(function () {
+        }).done(onResponceReceived).fail(onCommitFailure).always(function () {
             console.log("finished");
         });
     });
 
+    /**
+     * Handler for managing responces from the server
+     * @param msg json object received from the server
+     */
     var onResponceReceived = function (msg){
         var node = $('#message');
         var text;
@@ -28,6 +30,17 @@
             switchNodeText(node, text, "text-danger", "text-success");
         }
     };
+
+    /**
+     * Handler for managing failures
+     * @param msg json object
+     */
+    var onCommitFailure = function(msg){
+        var node = $('#message');
+        var text = "Errore nella comunicazione con il server: codice " + msg.status + ", messaggio \"" + msg.statusText + "\".";
+        switchNodeText(node, text, "text-danger", "text-success");
+
+    }
 
     /**
      * Switch a class of a given node
