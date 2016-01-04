@@ -4,17 +4,15 @@
     $("#commitBtn").click(function (event) {
         var name = $("#name").val();
         var password = $("#pwd").val();
+
         $("#name").val("");
         $("#password").val("");
-        var preloader = null;
+        var preloader = document.createElement('img');
+        preloader.src = 'img/preloader.gif';
         var data = {"name": name, "password": password};
-        jQuery.post(commitUrl, data, function (data, status, jqXHR) {
-            preloader = startPreloader($('#message'), "img/preloader.gif");
-        }).done(onResponceReceived).fail(onCommitFailure).always(function () {
-            if (!preloader) {
-                removePreloader(preloader);
-            }
-
+        addNode($('#message'), preloader);
+        jQuery.post(commitUrl, data).done(onResponceReceived).fail(onCommitFailure).always(function () {
+            removePreloader(preloader);
         });
     });
 
@@ -60,22 +58,20 @@
     }
 
     /**
-     * Add image node before given node
-     * @param node jquery node
-     * @param imgSrc
-     * @return inserted node
+     * Add given node before a target node
+     * @param target jquery node
+     * @param node node to insert
      */
-    var startPreloader = function (node, imgSrc) {
-        return node.before("<img src=\"" + imgSrc + "\" />");
+    var addNode = function (target, node) {
+        target.before(node);
     }
 
     /**
-     * removes given node from DOM.
+     * Removes given node from DOM.
      * @param node
-     * @returns {*}
      */
-    var removepreloader = function(node){
-        return node.detach();
+    var removePreloader = function (node) {
+        node.parentNode.removeChild(node);
     }
 
 
