@@ -9,10 +9,10 @@
         $("#password").val("");
         var preloader = document.createElement('img');
         preloader.src = 'img/preloader.gif';
-        var data = {"name": name, "password": password};
+        var data = {"auth": {"login": name, "password": password}};
         addNode($('#message'), preloader);
         jQuery.post(commitUrl, data).done(onResponceReceived).fail(onCommitFailure).always(function () {
-            removePreloader(preloader);
+            removeNode(preloader);
         });
     });
 
@@ -70,7 +70,7 @@
      * Removes given node from DOM.
      * @param node
      */
-    var removePreloader = function (node) {
+    var removeNode = function (node) {
         node.parentNode.removeChild(node);
     }
 

@@ -1,4 +1,14 @@
 <?php
+        $result = [];
+        try {
+            $result['size'] = 10;
+
+        } catch (Exception $e){
+            $result["errorCode"] = 1;
+        }
+
+
       header('Content-type: application/json');
-      sleep(2);
-      echo json_encode(["dumb" => true, "now" => date('H:i:s', time()), "size" => 21]);
+
+
+      echo json_encode($result);
