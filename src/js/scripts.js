@@ -12,15 +12,7 @@
         var data = {"auth": {"login": name, "password": password}};
         console.log("to be sent by ajax: ", data);
         addNode($('#message'), preloader);
-        $.ajax({
-            type: "POST",
-            url: commitUrl,
-            data: data,
-            contentType: 'application/json',
-            dataType: 'json',
-            async: true,
-            processData: false
-        }).done(onResponceReceived).fail(onCommitFailure).always(function () {
+        $.post(commitUrl, data).done(onResponceReceived).fail(onCommitFailure).always(function () {
             removeNode(preloader);
         });
     });
@@ -85,4 +77,5 @@
     }
 
 
-})();
+})
+();
