@@ -1,5 +1,7 @@
 (function () {
     var commitUrl = "news/statistics/commit";
+    var nodeSuccess = $('#messageSuccess');
+    var nodeWarning = $('#messageWarning');
 
     $("#commitBtn").click(function (event) {
         var name = $("#name").val();
@@ -19,25 +21,24 @@
             dataType: 'json',
             async: true,
             processData: false
-        }).done(onResponceReceived).fail(onCommitFailure).always(function () {
+        }).done(onResponseReceived).fail(onFailure).always(function () {
             removeNode(preloader);
         });
     });
 
     /**
-     * Handler for managing responces from the server
+     * Handler for managing responses from the server
      * @param msg json object received from the server
      */
-    var onResponceReceived = function (msg) {
-        var node = $('#message');
+    var onResponseReceived = function (msg) {
         var text;
-        console.log("Received: ", msg);
         if (msg && msg.size >= 0) {
-            text = "Sono stati marcati " + msg.size + " record per il prossimo salvataggio";
-            switchNodeText(node, text, "text-success", "text-danger");
+            text = msg.size > 0 ? "Sono stati marcati " + msg.size + " record per il prossimo salvataggio." : ("Non" +
+            " sono presenti record per il prossimo salvataggio.");
+            nodeSuccess.set(text);
         } else {
-            text = msg.errorCode >= 0 ? "Codice errore: " + msg.errorCode : "Errore non documentato";
-            switchNodeText(node, text, "text-danger", "text-success");
+            text = msg.errorCode >= 0 ? "Codice errore: " + msg.errorCode : "Errore non documentato.";
+            nodeWarning.set(text);
         }
     };
 
@@ -45,26 +46,12 @@
      * Handler for managing failures
      * @param msg json object
      */
-    var onCommitFailure = function (msg) {
-        console.log("failed: ", msg);
-        var node = $('#message');
+    var onFailure = function (msg) {
         var text = "Errore nella comunicazione con il server: codice " + msg.status + ", messaggio \"" + msg.statusText + "\".";
-        switchNodeText(node, text, "text-danger", "text-success");
+        nodeWarning.set(text);
 
     }
 
-    /**
-     * Switch a class of a given node
-     * @param node
-     * @param text
-     * @param addClass
-     * @param removeClass
-     */
-    var switchNodeText = function (node, text, addClass, removeClass) {
-        node.text(text);
-        node.addClass(addClass);
-        node.removeClass(removeClass);
-    }
 
     /**
      * Add given node before a target node
