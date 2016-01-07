@@ -12,7 +12,7 @@
         var preloader = document.createElement('img');
         preloader.src = 'img/preloader.gif';
         var data = {"auth": {"login": name, "password": password}};
-        addNode($('#message'), preloader);
+        addNode($('#messageSuccess'), preloader);
         $.ajax({
             type: "POST",
             url: commitUrl,
@@ -35,12 +35,15 @@
         if (msg && msg.size >= 0) {
             text = msg.size > 0 ? "Sono stati marcati " + msg.size + " record per il prossimo salvataggio." : ("Non" +
             " sono presenti record per il prossimo salvataggio.");
+
             nodeSuccess.innerHTML = text;
-            nodeWarning.innerHTML = "";
+            nodeSuccess.style.display = 'inherit';
+            nodeWarning.style.display = 'none';
         } else {
             text = msg.errorCode >= 0 ? "Codice errore: " + msg.errorCode : "Errore non documentato.";
             nodeWarning.innerHTML = text;
-            nodeSuccess.innerHTML = "";
+            nodeWarning.style.display = 'inherit';
+            nodeSuccess.style.display = 'none';
         }
     };
 
@@ -51,8 +54,8 @@
     var onFailure = function (msg) {
         var text = "Errore nella comunicazione con il server: codice " + msg.status + ", messaggio \"" + msg.statusText + "\".";
         nodeWarning.innerHTML = text;
-        nodeSuccess.innerHTML = "";
-
+        nodeWarning.style.display = 'inherit';
+        nodeSuccess.style.display = 'none';
     }
 
 
@@ -70,7 +73,9 @@
      * @param node
      */
     var removeNode = function (node) {
-        node.parentNode.removeChild(node);
+        if (node && node.parentNode) {
+            node.parentNode.removeChild(node);
+        }
     }
 
 
