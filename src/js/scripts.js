@@ -35,10 +35,12 @@
         if (msg && msg.size >= 0) {
             text = msg.size > 0 ? "Sono stati marcati " + msg.size + " record per il prossimo salvataggio." : ("Non" +
             " sono presenti record per il prossimo salvataggio.");
-            nodeSuccess.innerHTML = text
+            nodeSuccess.innerHTML = text;
+            nodeWarning.innerHTML = "";
         } else {
             text = msg.errorCode >= 0 ? "Codice errore: " + msg.errorCode : "Errore non documentato.";
-            nodeWarning.innerHTML = text
+            nodeWarning.innerHTML = text;
+            nodeSuccess.innerHTML = "";
         }
     };
 
@@ -48,7 +50,8 @@
      */
     var onFailure = function (msg) {
         var text = "Errore nella comunicazione con il server: codice " + msg.status + ", messaggio \"" + msg.statusText + "\".";
-        nodeWarning.innerHTML = text
+        nodeWarning.innerHTML = text;
+        nodeSuccess.innerHTML = "";
 
     }
 
