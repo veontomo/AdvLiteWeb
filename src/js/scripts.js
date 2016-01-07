@@ -10,9 +10,16 @@
         var preloader = document.createElement('img');
         preloader.src = 'img/preloader.gif';
         var data = {"auth": {"login": name, "password": password}};
-        console.log("to be sent by ajax: ", data);
         addNode($('#message'), preloader);
-        $.post(commitUrl, data).done(onResponceReceived).fail(onCommitFailure).always(function () {
+        $.ajax({
+            type: "POST",
+            url: commitUrl,
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            dataType: 'json',
+            async: true,
+            processData: false
+        }).done(onResponceReceived).fail(onCommitFailure).always(function () {
             removeNode(preloader);
         });
     });
@@ -77,5 +84,4 @@
     }
 
 
-})
-();
+})();
