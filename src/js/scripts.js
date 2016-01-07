@@ -48,7 +48,7 @@
      */
     var onFailure = function (msg) {
         var text = "Errore nella comunicazione con il server: codice " + msg.status + ", messaggio \"" + msg.statusText + "\".";
-        nodeWarning.set(text);
+        nodeWarning.val(text);
 
     }
 
