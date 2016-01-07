@@ -1,7 +1,7 @@
 (function () {
     var commitUrl = "news/statistics/commit";
-    var nodeSuccess = $('#messageSuccess');
-    var nodeWarning = $('#messageWarning');
+    var nodeSuccess = document.getElementById('messageSuccess');
+    var nodeWarning = document.getElementById('messageWarning');
 
     $("#commitBtn").click(function (event) {
         var name = $("#name").val();
@@ -35,10 +35,10 @@
         if (msg && msg.size >= 0) {
             text = msg.size > 0 ? "Sono stati marcati " + msg.size + " record per il prossimo salvataggio." : ("Non" +
             " sono presenti record per il prossimo salvataggio.");
-            nodeSuccess.val(text);
+            nodeSuccess.innerHTML = text
         } else {
             text = msg.errorCode >= 0 ? "Codice errore: " + msg.errorCode : "Errore non documentato.";
-            nodeWarning.val(text);
+            nodeWarning.innerHTML = text
         }
     };
 
@@ -48,7 +48,7 @@
      */
     var onFailure = function (msg) {
         var text = "Errore nella comunicazione con il server: codice " + msg.status + ", messaggio \"" + msg.statusText + "\".";
-        nodeWarning.val(text);
+        nodeWarning.innerHTML = text
 
     }
 
