@@ -35,10 +35,10 @@
         if (msg && msg.size >= 0) {
             text = msg.size > 0 ? "Sono stati marcati " + msg.size + " record per il prossimo salvataggio." : ("Non" +
             " sono presenti record per il prossimo salvataggio.");
-            nodeSuccess.set(text);
+            nodeSuccess.val(text);
         } else {
             text = msg.errorCode >= 0 ? "Codice errore: " + msg.errorCode : "Errore non documentato.";
-            nodeWarning.set(text);
+            nodeWarning.val(text);
         }
     };
 
