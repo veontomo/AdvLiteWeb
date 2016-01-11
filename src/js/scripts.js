@@ -101,13 +101,63 @@
      * Listener that triggers every time a child of element "#input-lines"
      * that has a class ".remove-me" is clicked.
      */
-    $('#input-lines').on('click', '.remove-me',  function (e) {
+    $('#input-lines').on('click', '.remove-me', function (e) {
         e.preventDefault();
         var currentElem = $(this);
         var currentLine = currentElem.closest(".form-group");
         currentLine.remove();
     });
 
+    $("#execBtn").click(function (event) {
+        var name = $("#name").val();
+        var password = $("#pwd").val();
+
+        $("#name").val("");
+        $("#pwd").val("");
+        //var preloader = document.createElement('img');
+        //preloader.src = 'img/preloader.gif';
+        var paths = readPaths($('#input-lines').children());
+        var data = {"auth": {"login": name, "password": password}, "paths": paths};
+        console.log(data);
+        //addNode($('#messageSuccess'), preloader);
+        //$.ajax({
+        //    type: "POST",
+        //    url: commitUrl,
+        //    data: JSON.stringify(data),
+        //    contentType: 'application/json',
+        //    dataType: 'json',
+        //    async: true,
+        //    processData: false
+        //}).done(onResponseReceived).fail(onFailure).always(function () {
+        //    removeNode(preloader);
+        //});
+    });
+
+
+    /**
+     * Read paths from given nodes.
+     * Each node is supposed to have two child "input" nodes. The value from the first "input"
+     * field becomes the resulting object key, the value of the other becomes corresponding value.
+     * @param nodes
+     * @return  jquery collection of nodes
+     */
+    var readPaths = function (nodes) {
+        var result = {};
+        if (!nodes) {
+            return result;
+        }
+        nodes.each(function () {
+            var child = $(this).find('input');
+            if (child.length == 2) {
+                var key = child[0].value;
+                var value = child[1].value;
+                if (key && value) {
+                    result[key] = value;
+                }
+            }
+        });
+        return result;
+    }
 
 
 })();
