@@ -79,34 +79,35 @@
     }
 
 
-
-
     var next = 1;
-    $("#input-lines").on("click", ".input-group-addon", function(e){
+    $("#input-lines").on("click", ".add-more", function (e) {
         e.preventDefault();
         var addto = "#field" + next;
         var addRemove = "#field" + (next);
         next = next + 1;
-        var currentLine = $(this).closest(".form-group");
-        var newInput = currentLine.clone();
-        console.log("current line: ", currentLine.html());
-        console.log("clone: " , newInput.html());
-        newInput.find("input").val("");
+        var currentElem = $(this);
+        var currentLine = currentElem.closest(".form-group");
+        var newInputLine = currentLine.clone();
+        var removeElem = currentElem.clone().addClass('remove-me').removeClass('add-more').addClass('btn-danger');
+        removeElem.text("-");
+        currentElem.after(removeElem);
+        currentElem.remove();
+        // clear the input fields
+        newInputLine.find("input").val("");
         //var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
         //var removeButton = $(removeBtn);
-        currentLine.after(newInput);
+        currentLine.after(newInputLine);
         //$(addRemove).after(removeButton);
         //$("#field" + next).attr('data-source', $(addto).attr('data-source'));
 
-        $('.remove-me').click(function(e){
+        $('.remove-me').click(function (e) {
             e.preventDefault();
-            var fieldNum = this.id.charAt(this.id.length-1);
+            var fieldNum = this.id.charAt(this.id.length - 1);
             var fieldID = "#field" + fieldNum;
             $(this).remove();
             $(fieldID).remove();
         });
     });
-
 
 
 })();
