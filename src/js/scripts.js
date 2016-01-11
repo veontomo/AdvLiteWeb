@@ -82,19 +82,21 @@
 
 
     var next = 1;
-    $("input.input-group-addon").click(function(e){
+    $("#input-lines").on("click", ".input-group-addon", function(e){
         e.preventDefault();
         var addto = "#field" + next;
         var addRemove = "#field" + (next);
         next = next + 1;
-        var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text">';
-        var newInput = $(newIn);
-        var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
-        var removeButton = $(removeBtn);
-        $(addto).after(newInput);
-        $(addRemove).after(removeButton);
-        $("#field" + next).attr('data-source',$(addto).attr('data-source'));
-        $("#count").val(next);
+        var currentLine = $(this).closest(".form-group");
+        var newInput = currentLine.clone();
+        console.log("current line: ", currentLine.html());
+        console.log("clone: " , newInput.html());
+        newInput.find("input").val("");
+        //var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
+        //var removeButton = $(removeBtn);
+        currentLine.after(newInput);
+        //$(addRemove).after(removeButton);
+        //$("#field" + next).attr('data-source', $(addto).attr('data-source'));
 
         $('.remove-me').click(function(e){
             e.preventDefault();
