@@ -2,13 +2,33 @@
     var commitUrl = "news/statistics/commit";
     var nodeSuccess = document.getElementById('messageSuccess');
     var nodeWarning = document.getElementById('messageWarning');
+    $('#authorizationForm').validate({
+        debug: true,
+        'rules': {
+            'userName': 'required',
+            'password': 'required'
+        },
+        'messages': {
+            'userName': 'Il campo &egrave; obbligatorio',
+            'password': 'Il campo &egrave; obbligatorio'
+        },
+        highlight: function (element, errorClass) {
+            $(element).fadeOut(function () {
+                $(element).fadeIn();
+            });
+        }
+    });
 
     $("#commitBtn").click(function (event) {
-        var name = $("#name").val();
-        var password = $("#pwd").val();
+        event.preventDefault();
+        if (!$('#authorizationForm').valid()) {
+            return;
+        }
+        var name = $("#userName").val();
+        var password = $("#password").val();
 
-        $("#name").val("");
-        $("#pwd").val("");
+        $("#userName").val("");
+        $("#password").val("");
         var preloader = document.createElement('img');
         preloader.src = 'img/preloader.gif';
         var data = {"auth": {"login": name, "password": password}};
@@ -110,11 +130,11 @@
 
     $("#execBtn").click(function (event) {
         event.preventDefault();
-        var name = $("#name").val();
-        var password = $("#pwd").val();
+        var name = $("#userName").val();
+        var password = $("#password").val();
 
-        $("#name").val("");
-        $("#pwd").val("");
+        $("#userName").val("");
+        $("#password").val("");
         //var preloader = document.createElement('img');
         //preloader.src = 'img/preloader.gif';
         var paths = readPaths($('#input-lines').children());
