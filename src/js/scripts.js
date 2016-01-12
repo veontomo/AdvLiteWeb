@@ -109,6 +109,7 @@
     });
 
     $("#execBtn").click(function (event) {
+        event.preventDefault();
         var name = $("#name").val();
         var password = $("#pwd").val();
 
@@ -131,6 +132,15 @@
         //}).done(onResponseReceived).fail(onFailure).always(function () {
         //    removeNode(preloader);
         //});
+    });
+
+    /**
+     * Cleans all input fields on the page once an element with class "resetBtn" is clicked.
+     * @param e event passed to the callback
+     */
+    $('.resetBtn').click(function (e) {
+        e.preventDefault();
+        $('input').val("");
     });
 
 
