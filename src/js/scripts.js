@@ -12,7 +12,7 @@
             'userName': 'Il campo &egrave; obbligatorio',
             'password': 'Il campo &egrave; obbligatorio'
         },
-        highlight: function (element, errorClass) {
+        'highlight': function (element, errorClass) {
             $(element).fadeOut(function () {
                 $(element).fadeIn();
             });
@@ -130,6 +130,10 @@
 
     $("#execBtn").click(function (event) {
         event.preventDefault();
+        if (!$('#authorizationForm').valid()) {
+            return;
+        }
+
         var name = $("#userName").val();
         var password = $("#password").val();
 
