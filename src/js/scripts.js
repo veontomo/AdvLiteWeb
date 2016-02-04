@@ -139,23 +139,23 @@
 
         $("#userName").val("");
         $("#password").val("");
-        //var preloader = document.createElement('img');
-        //preloader.src = 'img/preloader.gif';
+        var preloader = document.createElement('img');
+        preloader.src = 'img/preloader.gif';
         var paths = readPaths($('#input-lines').children());
         var data = {"auth": {"login": name, "password": password}, "paths": paths};
         console.log(data);
-        //addNode($('#messageSuccess'), preloader);
-        //$.ajax({
-        //    type: "POST",
-        //    url: commitUrl,
-        //    data: JSON.stringify(data),
-        //    contentType: 'application/json',
-        //    dataType: 'json',
-        //    async: true,
-        //    processData: false
-        //}).done(onResponseReceived).fail(onFailure).always(function () {
-        //    removeNode(preloader);
-        //});
+        addNode($('#messageSuccess'), preloader);
+        $.ajax({
+            type: "POST",
+            url: commitUrl,
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            dataType: 'json',
+            async: true,
+            processData: false
+        }).done(onResponseReceived).fail(onFailure).always(function () {
+            removeNode(preloader);
+        });
     });
 
     /**
